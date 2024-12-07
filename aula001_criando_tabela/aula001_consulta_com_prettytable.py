@@ -8,7 +8,7 @@ import os
 import sqlite3
 from prettytable import PrettyTable 
 
-conn = sqlite3.connect("C:\coly_git\projetos_sqlite3\BD\meu_banco_de_dados.bd")
+conn = sqlite3.connect("../projetos_sqlite3/BD/meu_banco_de_dados.db")
 
 cursor = conn.cursor()
 

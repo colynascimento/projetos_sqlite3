@@ -7,7 +7,11 @@
 import os
 import sqlite3
 
-conn = sqlite3.connect("C:\coly_git\projetos_sqlite3\BD\meu_banco_de_dados.bd")
+caminho_banco = os.path.join("..", "projetos_sqlite3", "BD", "meu_banco_de_dados.db")
+
+# print(f"Caminho do banco: {os.path.abspath(caminho_banco)}")
+
+conn = sqlite3.connect(caminho_banco)
 
 cursor = conn.cursor()
 
