@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 conn = sqlite3.connect('../projetos_sqlite3/BD/bd_sistema_gerenciamento_passagens.db')
 
@@ -13,7 +14,7 @@ cursor.execute('''
                 documento TEXT NOT NULL,
                 telefone TEXT NOT NULL,
                 email TEXT NOT NULL,
-                deficiencia_legal_check TEXT CHECK(deficiencia_legal IN ('sim', 'não')) NOT NULL,
+                deficiencia_legal_check TEXT CHECK(deficiencia_legal_check IN ('sim', 'não')) NOT NULL,
                 deficiencia_legal TEXT
                 );
 ''')
@@ -44,7 +45,7 @@ cursor.execute('''
                nome TEXT NOT NULL,
                pais_origem TEXT NOT NULL,
                contato_suporte TEXT NOT NULL,
-               email TEXT NOT NULL,
+               email TEXT NOT NULL
                );
 ''')
 
@@ -99,7 +100,7 @@ cursor.execute('''
                cod_ajuste INTEGER PRIMARY KEY AUTOINCREMENT,
                cod_preco INTEGER NOT NULL,
                tipo_ajuste TEXT CHECK(tipo_ajuste IN ('desconto', 'aumento')),
-               valor_porcentual REAL NOT NULL CHECK(valor_porcentual >= 0)
+               valor_porcentual REAL NOT NULL CHECK(valor_porcentual >= 0),
                descricao TEXT NOT NULL,
                data_inicio DATE NOT NULL,
                data_fim DATE NOT NULL,
@@ -108,4 +109,5 @@ cursor.execute('''
 ''')
 
 conn.commit()
+
 conn.close()
