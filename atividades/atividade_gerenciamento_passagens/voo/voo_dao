@@ -24,7 +24,7 @@ class VooDAO:
     def buscar_por_id(self, cod_voo):
         conn = self.conectar()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM voos WHERE cod_voo = ?', (cod_voo)
+        cursor.execute('SELECT * FROM voos WHERE cod_voo = ?', (cod_voo))
         resultado = cursor.fetchone()
         conn.close()
         return Voo(*resultado) if resultado else None
