@@ -1,5 +1,5 @@
 import sqlite3
-from cliente import Cliente
+from cliente.cliente import Cliente
 
 class ClienteDao:
     def __init__(self, db_path):

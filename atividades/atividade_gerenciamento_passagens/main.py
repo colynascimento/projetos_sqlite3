@@ -1,10 +1,11 @@
 import sqlite3
 import os
-import cliente
+import cliente.cliente_dao
+import cliente.cliente
 import linha_aerea
 import voo
 import sys
-import cliente
+from prettytable import PrettyTable
 
 os.system('cls')
 
@@ -19,5 +20,19 @@ area = input('Qual área deseja acessar? ')
 
 if area == '1':
     os.system('cls')
-    cliente.cliente_dao.ClienteDao
+    print('Listar Clientes:')
+    dao = cliente.cliente_dao.ClienteDao('../projetos_sqlite3/BD/bd_sistema_gerenciamento_passagens.db')
+    clientes = dao.listar_todos()
 
+    if not clientes:
+        print('Nenhum cliente cadastrado.')
+    else:
+        tabela = PrettyTable()
+        # field_names define os nomes que aparecerão no cabeçalho da tabela
+        tabela.field_names = ['ID', 'Nome', 'Data Nascimento', 'Nacionalidade', 'Documento', 'Telefone', 'Email', 'Deficiencia Legal?']
+        cabecalho = [descricao[0] for descricao in sqlite3.connect('../projetos_sqlite3/BD/bd_sistema_gerenciamento_passagens.db').cursor()]
+
+        for cliente in clientes:
+            tabela.add_row()
+
+            print(tabela)
