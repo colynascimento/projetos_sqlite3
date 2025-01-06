@@ -30,9 +30,8 @@ if area == '1':
         tabela = PrettyTable()
         # field_names define os nomes que aparecerão no cabeçalho da tabela
         tabela.field_names = ['ID', 'Nome', 'Data Nascimento', 'Nacionalidade', 'Documento', 'Telefone', 'Email', 'Deficiencia Legal?']
-        cabecalho = [descricao[0] for descricao in sqlite3.connect('../projetos_sqlite3/BD/bd_sistema_gerenciamento_passagens.db').cursor()]
 
         for cliente in clientes:
-            tabela.add_row()
+            tabela.add_row([cliente.id_cliente, cliente.nome, cliente.data_nascimento, cliente.nacionalidade, cliente.documento, cliente.telefone, cliente.email, cliente.deficiencia_legal])
 
-            print(tabela)
+        print(tabela)
