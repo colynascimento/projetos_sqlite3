@@ -6,7 +6,7 @@ conn = sqlite3.connect('../projetos_sqlite3/BD/bd_sistema_gerenciamento_passagen
 
 cursor = conn.cursor()
 
-cursor.execute("SELECT * FROM linhas_aereas")
+cursor.execute("SELECT * FROM passagens")
 resultados = cursor.fetchall()
 
 os.system("cls")
