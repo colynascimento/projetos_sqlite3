@@ -20,14 +20,6 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    CREATE TABLE IF NOT EXISTS aeronaves(
-                cod_aeronave INTEGER PRIMARY KEY,
-                modelo TEXT NOT NULL,
-                capacidade_passageiros INTEGER NOT NULL 
-                );
-''')
-
-cursor.execute('''
     CREATE TABLE IF NOT EXISTS destinos(
                 cod_iata CHAR(3) PRIMARY KEY,
                 cod_icao CHAR(4) NOT NULL,
@@ -47,6 +39,17 @@ cursor.execute('''
                contato_suporte TEXT NOT NULL,
                email TEXT NOT NULL
                );
+''')
+
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS aeronaves(
+                cod_aeronave INTEGER PRIMARY KEY,
+                cod_linha_aerea INTEGER NOT NULL,
+                modelo TEXT NOT NULL,
+                capacidade_passageiros INTEGER NOT NULL,
+                ano INT NOT NULL,
+                FOREIGN KEY(cod_linha_aerea) REFERENCES linhas_aereas(cod_linha_aerea) 
+                );
 ''')
 
 cursor.execute('''
