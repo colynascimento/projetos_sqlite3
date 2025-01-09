@@ -14,11 +14,11 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    INSERT INTO aeronaves (cod_aeronave, modelo, capacidade_passageiros) 
+    INSERT INTO aeronaves (cod_aeronave, cod_linha_aerea, modelo, capacidade_passageiros, ano) 
     VALUES
-        (1, 'Boeing 737', 189),
-        (2, 'Airbus A320', 180),
-        (3, 'Embraer E195', 132);
+        (1, 3, 'Boeing 737', 189, 2005),
+        (2, 1, 'Airbus A320', 180, 2010),
+        (3, 2, 'Embraer E195', 132, 2008);
 ''')
 
 cursor.execute('''
