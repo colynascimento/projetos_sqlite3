@@ -1,7 +1,7 @@
 from prettytable import PrettyTable
 from linha_aereas.linha_aerea_dao import LinhaAereaDAO
 from aeronaves.aeronave_dao import AeronaveDao
-import os
+from aeronaves.aeronave import Aeronave
 
 def menu_linhas_aereas():
     # caminho do bd
