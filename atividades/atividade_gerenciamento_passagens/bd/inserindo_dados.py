@@ -14,14 +14,6 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    INSERT INTO aeronaves (cod_aeronave, cod_linha_aerea, modelo, capacidade_passageiros, ano) 
-    VALUES
-        (1, 'GL7', 'Boeing 737', 189, 2005),
-        (2, 'LT4', 'Airbus A320', 180, 2010),
-        (3, 'AA1', 'Embraer E195', 132, 2008);
-''')
-
-cursor.execute('''
     INSERT INTO destinos (cod_iata, cod_icao, nome_aeroporto, cidade, estado, pais, tipo_aeroporto) 
     VALUES
         ('GRU', 'SBGR', 'Aeroporto Internacional de Guarulhos', 'São Paulo', 'SP', 'Brasil', 'internacional'),
@@ -35,6 +27,14 @@ cursor.execute('''
         ('LT4', 'LATAM Airlines', 'Brasil', '+551199887766', 'suporte@latam.com'),
         ('AA1', 'American Airlines', 'EUA', '+18005551234', 'support@aa.com'),
         ('GL7', 'Gol Linhas Aéreas', 'Brasil', '+551134567890', 'contato@gol.com.br');
+''')
+
+cursor.execute('''
+    INSERT INTO aeronaves (cod_aeronave, cod_linha_aerea, modelo, capacidade_passageiros, ano) 
+    VALUES
+        (1, 'GL7', 'Boeing 737', 189, 2005),
+        (2, 'LT4', 'Airbus A320', 180, 2010),
+        (3, 'AA1', 'Embraer E195', 132, 2008);
 ''')
 
 cursor.execute('''
@@ -54,7 +54,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    INSERT INTO preco_base_rota (cod_linha_aerea, cod_iata_origem, cod_iata_destino, preco_base) 
+    INSERT INTO rotas (cod_linha_aerea, cod_iata_origem, cod_iata_destino, preco_base) 
     VALUES
         ('LT4', 'GRU', 'MIA', 1200.00),
         ('AA1', 'SDU', 'GRU', 400.00),

@@ -86,7 +86,7 @@ cursor.execute('''
 
 
 cursor.execute('''
-    CREATE TABLE IF NOT EXISTS preco_base_rota(
+    CREATE TABLE IF NOT EXISTS rotas(
                cod_preco INTEGER PRIMARY KEY AUTOINCREMENT,
                cod_linha_aerea CHAR(3) NOT NULL,
                cod_iata_origem CHAR(3) NOT NULL,
@@ -107,7 +107,7 @@ cursor.execute('''
                descricao TEXT NOT NULL,
                data_inicio DATE NOT NULL,
                data_fim DATE NOT NULL,
-               FOREIGN KEY(cod_preco) REFERENCES preco_base_rota(cod_preco)
+               FOREIGN KEY(cod_preco) REFERENCES rotas(cod_preco)
                );
 ''')
 
