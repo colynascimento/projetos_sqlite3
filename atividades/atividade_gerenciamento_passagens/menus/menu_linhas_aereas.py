@@ -1,5 +1,6 @@
 from prettytable import PrettyTable
 from linha_aereas.linha_aerea_dao import LinhaAereaDAO
+from aeronaves.aeronave_dao import AeronaveDao
 import os
 
 def menu_linhas_aereas():
@@ -47,4 +48,22 @@ def menu_linhas_aereas():
 
 def cadastrar_aeronaves(dao):
     print('_' * 60)
-    cod_linha_aerea = input('Insira o código da linha aérea')
+    cod_linha_aerea = input('Insira o código da linha aérea: ')
+    nome_linha_aerea = LinhaAereaDAO.nomear_por_cod(cod_linha_aerea)
+    
+    if cod_linha_aerea is None:
+        print('Linha Aérea não encontrada.')
+    else:
+        os.system('cls')
+        print(f'Aeronaves de {nome_linha_aerea}:')
+        AeronaveDao.filtrar_por_linha_aerea(cod_linha_aerea)
+        print('_' * 60)
+        print('Cadastrar nova aeronave:')
+        cod_aeronave = int(input('Insira o código da aeronave(apenas números): ')) # criar validação aqui
+        modelo = input('Insira o modelo: ')
+        capacidade_passageiros = int(input('Insira a capacidade máxima de passageiros: '))
+        ano = int(input('Insira o ano de fabricação: '))
+        
+        nova_aeronave = Aeronave(cod_aeronave, cod_linha_aerea, modelo, capacidade_passageiros, ano)
+        print('Aeronave adicionada com sucesso!')
+        input('Pressione Enter para voltar...')    

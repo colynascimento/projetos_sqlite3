@@ -21,10 +21,10 @@ class AeronaveDao:
             aeronaves.append(aeronave)
         return aeronaves
     
-    def filtrar_por_linha_aerea(self, linha_aerea):
+    def filtrar_por_linha_aerea(self, cod_linha_aerea):
         conn = self.conectar()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM aeronaves WHERE cod_linha_aerea = ?', (linha_aerea,))
+        cursor.execute('SELECT * FROM aeronaves WHERE cod_linha_aerea = ?', (cod_linha_aerea,))
         tabela_filtrada = cursor.fetchall()
         conn.close()
         return tabela_filtrada
@@ -36,3 +36,4 @@ class AeronaveDao:
         resultado = cursor.fetchone()
         conn.close()
         return Aeronave(*resultado) if resultado else None
+    

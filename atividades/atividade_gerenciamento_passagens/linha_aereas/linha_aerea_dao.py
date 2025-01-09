@@ -21,13 +21,21 @@ class LinhaAereaDAO:
             linhas_aereas.append(linha_aerea)
         return linhas_aereas
     
-    def buscar_por_id(self, cod_linha_aerea):
+    def buscar_por_cod(self, cod_linha_aerea):
         conn = self.conectar()
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM linhas_aereas WHERE cod_linha_aerea = ?', (cod_linha_aerea))
         resultado = cursor.fetchone()
         conn.close()
         return LinhaAerea(*resultado) if resultado else None
+    
+    def nomear_por_cod(self, cod_linha_aerea):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('SELECT nome_linha_aerea FROM linhas_aereas WHERE cod_linha_aerea = ?', (cod_linha_aerea,))
+        resultado = cursor.fetchone()
+        conn.close()
+        return resultado[0] if resultado else None
     
     def cadastrar(self, linha_aerea):
         conn = self.conectar()
@@ -37,6 +45,3 @@ class LinhaAereaDAO:
                        (linha_aerea.cod_linha_aerea, linha_aerea.nome, linha_aerea.pais_origem, linha_aerea.contato_suporte, linha_aerea.email))
         conn.commit()
         conn.close()
-
-    def cadastrar_aeronave(self, linha_aerea):
-        conn
