@@ -62,7 +62,7 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    INSERT INTO ajustes_preco (cod_preco, tipo_ajuste, valor_porcentual, descricao, data_inicio, data_fim) 
+    INSERT INTO ajustes_preco (cod_rota, tipo_ajuste, valor_porcentual, descricao, data_inicio, data_fim) 
     VALUES
         (1, 'desconto', 10.00, 'Promoção de Natal', '2024-12-01', '2024-12-25'),
         (2, 'aumento', 15.00, 'Alta temporada', '2024-12-15', '2025-01-15'),

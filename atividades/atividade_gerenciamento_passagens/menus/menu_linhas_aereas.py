@@ -52,11 +52,9 @@ def cadastrar_aeronaves(linha_aerea_dao, aeronave_dao):
 
     while True:
         print('_' * 60)
+
         cod_linha_aerea = input('Insira o código da linha aérea: ').upper()
         nome_linha_aerea = linha_aerea_dao.nomear_por_cod(cod_linha_aerea)
-
-        print(f"Tipo de cod_linha_aerea: {type(cod_linha_aerea)}")
-        print(f"Valor de cod_linha_aerea: {cod_linha_aerea}")
 
         if linha_aerea_dao.buscar_por_cod(cod_linha_aerea) is None:
             print('Linha Aérea não encontrada.')
@@ -65,9 +63,18 @@ def cadastrar_aeronaves(linha_aerea_dao, aeronave_dao):
             os.system('cls')
 
             print(f'Aeronaves de {nome_linha_aerea}:')
-            aeronave_dao.filtrar_por_linha_aerea(cod_linha_aerea)
-            print('_' * 60)
+
+            filtro_linha_aerea = aeronave_dao.filtrar_por_linha_aerea(cod_linha_aerea)
+            tabela_filtrada = PrettyTable()
+            tabela_filtrada.field_names = ['Código Aeronave', 'Modelo', 'Capacidade de Passageiros', 'Ano']
+    
+            for aeronave in filtro_linha_aerea:
+                tabela_filtrada.add_row([aeronave.cod_aeronave, aeronave.modelo, aeronave.capacidade_passageiros, aeronave.ano])
+    
+            print(tabela_filtrada)
+
             print('Cadastrar nova aeronave:')
+            print('_' * 60)
             cod_aeronave = int(input('Insira o código da aeronave(apenas números): ')) # criar validação aqui
             modelo = input('Insira o modelo: ')
             capacidade_passageiros = int(input('Insira a capacidade máxima de passageiros: '))
@@ -78,6 +85,7 @@ def cadastrar_aeronaves(linha_aerea_dao, aeronave_dao):
 
             print('Aeronave adicionada com sucesso!')
             input('Pressione Enter para voltar...')
+            menu_linhas_aereas()
 
 def visualizar_rotas():
     pass

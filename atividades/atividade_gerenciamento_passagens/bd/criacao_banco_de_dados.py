@@ -87,10 +87,10 @@ cursor.execute('''
 
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS rotas(
-               cod_preco INTEGER PRIMARY KEY AUTOINCREMENT,
-               cod_linha_aerea CHAR(3) NOT NULL,
+               cod_rota INTEGER PRIMARY KEY AUTOINCREMENT,
+               cod_linha_aerea TEXT NOT NULL,
                cod_iata_origem CHAR(3) NOT NULL,
-               cod_iata_destino INTEGER NOT NULL,
+               cod_iata_destino CHAR(3) NOT NULL,
                preco_base REAL NOT NULL,
                FOREIGN KEY(cod_linha_aerea) REFERENCES linhas_aereas(cod_linha_aerea),
                FOREIGN KEY(cod_iata_origem) REFERENCES destinos(cod_iata),
@@ -101,13 +101,13 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS ajustes_preco(
                cod_ajuste INTEGER PRIMARY KEY AUTOINCREMENT,
-               cod_preco INTEGER NOT NULL,
+               cod_rota INTEGER NOT NULL,
                tipo_ajuste TEXT CHECK(tipo_ajuste IN ('desconto', 'aumento')),
                valor_porcentual REAL NOT NULL CHECK(valor_porcentual >= 0),
                descricao TEXT NOT NULL,
                data_inicio DATE NOT NULL,
                data_fim DATE NOT NULL,
-               FOREIGN KEY(cod_preco) REFERENCES rotas(cod_preco)
+               FOREIGN KEY(cod_rota) REFERENCES rotas(cod_rota)
                );
 ''')
 
