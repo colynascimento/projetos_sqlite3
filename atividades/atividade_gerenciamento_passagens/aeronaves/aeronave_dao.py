@@ -1,5 +1,5 @@
 import sqlite3
-from linha_aereas import Aeronave
+from aeronaves.aeronave import Aeronave
 
 class AeronaveDao:
     def __init__(self, db_path):
@@ -36,4 +36,14 @@ class AeronaveDao:
         resultado = cursor.fetchone()
         conn.close()
         return Aeronave(*resultado) if resultado else None
+    
+    def cadastrar(self, nova_aeronave):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO aeronaves (cod_aeronave, cod_linha_aerea, modelo, capacidade_passageiros, ano)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (nova_aeronave.cod_aeronave, nova_aeronave.cod_linha_aerea, nova_aeronave.modelo, nova_aeronave.capacidade_passageiros, nova_aeronave.ano))
+        conn.commit()
+        conn.close()
     

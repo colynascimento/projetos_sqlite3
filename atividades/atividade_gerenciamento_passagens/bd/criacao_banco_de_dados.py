@@ -33,7 +33,7 @@ cursor.execute('''
 
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS linhas_aereas(
-               cod_linha_aerea INTEGER PRIMARY KEY,
+               cod_linha_aerea TEXT PRIMARY KEY,
                nome TEXT NOT NULL,
                pais_origem TEXT NOT NULL,
                contato_suporte TEXT NOT NULL,

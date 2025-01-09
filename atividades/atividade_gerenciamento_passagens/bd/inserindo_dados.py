@@ -16,9 +16,9 @@ cursor.execute('''
 cursor.execute('''
     INSERT INTO aeronaves (cod_aeronave, cod_linha_aerea, modelo, capacidade_passageiros, ano) 
     VALUES
-        (1, 3, 'Boeing 737', 189, 2005),
-        (2, 1, 'Airbus A320', 180, 2010),
-        (3, 2, 'Embraer E195', 132, 2008);
+        (1, 'GL7', 'Boeing 737', 189, 2005),
+        (2, 'LT4', 'Airbus A320', 180, 2010),
+        (3, 'AA1', 'Embraer E195', 132, 2008);
 ''')
 
 cursor.execute('''
@@ -32,17 +32,17 @@ cursor.execute('''
 cursor.execute('''
     INSERT INTO linhas_aereas (cod_linha_aerea, nome, pais_origem, contato_suporte, email) 
     VALUES
-        (1, 'LATAM Airlines', 'Brasil', '+551199887766', 'suporte@latam.com'),
-        (2, 'American Airlines', 'EUA', '+18005551234', 'support@aa.com'),
-        (3, 'Gol Linhas Aéreas', 'Brasil', '+551134567890', 'contato@gol.com.br');
+        ('LT4', 'LATAM Airlines', 'Brasil', '+551199887766', 'suporte@latam.com'),
+        ('AA1', 'American Airlines', 'EUA', '+18005551234', 'support@aa.com'),
+        ('GL7', 'Gol Linhas Aéreas', 'Brasil', '+551134567890', 'contato@gol.com.br');
 ''')
 
 cursor.execute('''
     INSERT INTO voos (cod_voo, cod_linha_aerea, cod_aeronave, cod_iata_origem, cod_iata_destino, data_hora_partida, data_hora_chegada, plataforma) 
     VALUES
-        (1, 1, 1, 'GRU', 'MIA', '2024-12-10 08:00', '2024-12-10 16:00', 5),
-        (2, 3, 2, 'SDU', 'GRU', '2024-12-11 15:30', '2024-12-11 17:00', 2),
-        (3, 2, 3, 'MIA', 'GRU', '2024-12-12 10:00', '2024-12-12 18:00', 7);
+        (1, 'LT4', 1, 'GRU', 'MIA', '2024-12-10 08:00', '2024-12-10 16:00', 5),
+        (2, 'AA1', 2, 'SDU', 'GRU', '2024-12-11 15:30', '2024-12-11 17:00', 2),
+        (3, 'GL7', 3, 'MIA', 'GRU', '2024-12-12 10:00', '2024-12-12 18:00', 7);
 ''')
 
 cursor.execute('''
@@ -56,9 +56,9 @@ cursor.execute('''
 cursor.execute('''
     INSERT INTO preco_base_rota (cod_linha_aerea, cod_iata_origem, cod_iata_destino, preco_base) 
     VALUES
-        (1, 'GRU', 'MIA', 1200.00),
-        (3, 'SDU', 'GRU', 400.00),
-        (2, 'MIA', 'GRU', 1300.00);
+        ('LT4', 'GRU', 'MIA', 1200.00),
+        ('AA1', 'SDU', 'GRU', 400.00),
+        ('GL7', 'MIA', 'GRU', 1300.00);
 ''')
 
 cursor.execute('''

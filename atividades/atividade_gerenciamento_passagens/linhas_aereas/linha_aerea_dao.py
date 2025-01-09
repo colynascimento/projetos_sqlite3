@@ -1,5 +1,5 @@
 import sqlite3
-from linha_aereas.linha_aerea import LinhaAerea
+from linhas_aereas.linha_aerea import LinhaAerea
 
 class LinhaAereaDAO:
     def __init__(self, db_path):
@@ -24,7 +24,7 @@ class LinhaAereaDAO:
     def buscar_por_cod(self, cod_linha_aerea):
         conn = self.conectar()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM linhas_aereas WHERE cod_linha_aerea = ?', (cod_linha_aerea))
+        cursor.execute('SELECT * FROM linhas_aereas WHERE cod_linha_aerea = ?', (cod_linha_aerea,))
         resultado = cursor.fetchone()
         conn.close()
         return LinhaAerea(*resultado) if resultado else None
@@ -32,7 +32,7 @@ class LinhaAereaDAO:
     def nomear_por_cod(self, cod_linha_aerea):
         conn = self.conectar()
         cursor = conn.cursor()
-        cursor.execute('SELECT nome_linha_aerea FROM linhas_aereas WHERE cod_linha_aerea = ?', (cod_linha_aerea,))
+        cursor.execute('SELECT nome FROM linhas_aereas WHERE cod_linha_aerea = ?', (cod_linha_aerea,))
         resultado = cursor.fetchone()
         conn.close()
         return resultado[0] if resultado else None
