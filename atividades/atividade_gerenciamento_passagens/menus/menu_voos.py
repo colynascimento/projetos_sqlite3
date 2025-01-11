@@ -40,8 +40,7 @@ def menu_voos():
         if opcao == '0':
             return
         elif opcao == '1':
-            # exibir_detalhes(voo_dao)
-            pass
+            exibir_detalhes(voo_dao)
         elif opcao == '2':
             # visualizar_rotas(rotas_dao)
             pass
@@ -53,4 +52,7 @@ def exibir_detalhes(voo_dao):
     
     while True:
         print('_' * 60)
-        cod_voo = input('Insira o código do vôo que deseja consultar: ')
+        cod_voo = input('Insira o código do vôo que deseja consultar: ') # inserir validação aqui
+        
+        
+        

@@ -37,3 +37,22 @@ class VooDAO:
         resultado = cursor.fetchone()
         conn.close()
         return Voo(*resultado) if resultado else None
+    
+    def consultar(self, cod_voo):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('''SELECT
+            voos.cod_aeronave,
+            linhas_aereas.nome,
+            voos.cod_iata_origem,
+            voos.cod_iata_destino,
+            voos.data_hora_partida,
+            voos.data_hora_chegada,
+            (rotas.preco_base - (rotas.preco_base * ajustes_preco.valor_porcentual / 100)) AS preco_atual
+            voos.plataforma
+        FROM voos
+        INNER JOIN linhas_aereas ON voos.cod_linha_aerea = linhas_aereas.cod_linha_aerea
+        INNER JOIN ajustes_preco ON voos
+        ''')
+        
+        # modificar na criação do bd na tabela ajuste_preco para cod_rota tornar-se cod_voo
