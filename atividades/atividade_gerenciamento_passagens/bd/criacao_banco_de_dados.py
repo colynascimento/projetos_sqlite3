@@ -101,13 +101,13 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS ajustes_preco(
                cod_ajuste INTEGER PRIMARY KEY AUTOINCREMENT,
-               cod_rota INTEGER NOT NULL,
+               cod_voo INTEGER NOT NULL,
                tipo_ajuste TEXT CHECK(tipo_ajuste IN ('desconto', 'aumento')),
-               valor_porcentual REAL NOT NULL CHECK(valor_porcentual >= 0),
+               valor_porcentual REAL NOT NULL,
                descricao TEXT NOT NULL,
                data_inicio DATE NOT NULL,
                data_fim DATE NOT NULL,
-               FOREIGN KEY(cod_rota) REFERENCES rotas(cod_rota)
+               FOREIGN KEY(cod_voo) REFERENCES voo(cod_voo)
                );
 ''')
 

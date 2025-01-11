@@ -18,7 +18,7 @@ def menu_voos():
 
         else:
             tabela = PrettyTable()
-            tabela.field_names = ['Código Vôo', 'Código Linha Aérea', 'Linha Aérea', 'Cidade Origem', 'IATA Origem', 'Cidade Destino', 'IATA Destino', 'Partida', 'Chegada']
+            tabela.field_names = ['Código Vôo', 'Código Linha Aérea', 'Linha Aérea', 'Cidade Origem', 'Cidade Destino', 'Partida', 'Chegada']
 
             for voo in voos:
                 tabela.add_row(voo)
