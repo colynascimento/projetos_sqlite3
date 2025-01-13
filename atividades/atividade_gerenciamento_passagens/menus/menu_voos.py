@@ -51,8 +51,26 @@ def menu_voos():
 def exibir_detalhes(voo_dao):
     
     while True:
+        voos = voo_dao.listar_todos()
+
         print('_' * 60)
-        cod_voo = input('Insira o código do vôo que deseja consultar: ') # inserir validação aqui
-        
+        cod_voo = int(input('Insira o código do vôo que deseja consultar: ')) # inserir validação aqui
+
+        cod_voo = voo_dao.buscar_por_id(cod_voo)
+
+        if not cod_voo:
+            print('Nenhum vôo cadastrado.')
+
+        else:
+            detalhes = voo_dao.consultar(cod_voo)
+
+            tabela_detalhada = PrettyTable()
+            tabela_detalhada.field_names = ['Código Vôo', 'Linha Aérea', 'IATA Origem', 'IATA Destino', 'Partida', 'Chegada', 'Valor', 'Plataforma']
+
+            for detalhe in detalhes:
+                tabela_detalhada.add_row(detalhe)
+
+        print(tabela_detalhada)
+        input('Pressione Enter para voltar ao menu.')
         
         

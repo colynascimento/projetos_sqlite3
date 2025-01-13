@@ -42,6 +42,19 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
+    CREATE TABLE IF NOT EXISTS rotas(
+               cod_rota INTEGER PRIMARY KEY AUTOINCREMENT,
+               cod_linha_aerea TEXT NOT NULL,
+               cod_iata_origem CHAR(3) NOT NULL,
+               cod_iata_destino CHAR(3) NOT NULL,
+               preco_base REAL NOT NULL,
+               FOREIGN KEY(cod_linha_aerea) REFERENCES linhas_aereas(cod_linha_aerea),
+               FOREIGN KEY(cod_iata_origem) REFERENCES destinos(cod_iata),
+               FOREIGN KEY(cod_iata_destino) REFERENCES destinos(cod_iata)
+               );
+''')
+
+cursor.execute('''
     CREATE TABLE IF NOT EXISTS aeronaves(
                 cod_aeronave INTEGER PRIMARY KEY,
                 cod_linha_aerea INTEGER NOT NULL,
@@ -55,6 +68,7 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS voos(
                cod_voo INTEGER PRIMARY KEY,
+               cod_rota INTEGER NOT NULL,
                cod_linha_aerea INTEGER NOT NULL,
                cod_aeronave INTEGER NOT NULL,
                cod_iata_origem CHAR(3) NOT NULL,
@@ -62,6 +76,7 @@ cursor.execute('''
                data_hora_partida TEXT NOT NULL,
                data_hora_chegada TEXT NOT NULL,
                plataforma INT NOT NULL,
+               FOREIGN KEY (cod_rota) REFERENCES rotas(cod_rota),
                FOREIGN KEY(cod_linha_aerea) REFERENCES linhas_aereas(cod_linha_aerea),
                FOREIGN KEY(cod_aeronave) REFERENCES aeronaves(cod_aeronave),
                FOREIGN KEY(cod_iata_origem) REFERENCES destinos(cod_iata),
@@ -81,20 +96,6 @@ cursor.execute('''
                data_hora_compra TEXT NOT NULL,
                FOREIGN KEY(cod_voo) REFERENCES voos(cod_voo),
                FOREIGN KEY(id_cliente) REFERENCES clientes(id_cliente)
-               );
-''')
-
-
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS rotas(
-               cod_rota INTEGER PRIMARY KEY AUTOINCREMENT,
-               cod_linha_aerea TEXT NOT NULL,
-               cod_iata_origem CHAR(3) NOT NULL,
-               cod_iata_destino CHAR(3) NOT NULL,
-               preco_base REAL NOT NULL,
-               FOREIGN KEY(cod_linha_aerea) REFERENCES linhas_aereas(cod_linha_aerea),
-               FOREIGN KEY(cod_iata_origem) REFERENCES destinos(cod_iata),
-               FOREIGN KEY(cod_iata_destino) REFERENCES destinos(cod_iata)
                );
 ''')
 

@@ -1,5 +1,6 @@
 from menus.menu_clientes import menu_clientes
 from menus.menu_linhas_aereas import menu_linhas_aereas
+from menus.menu_voos import menu_voos
 import os
 
 def menu_principal():
@@ -23,8 +24,8 @@ def menu_principal():
             menu_linhas_aereas()
 
         elif area == '3':
-            print("Opção de Voos ainda não implementada.")
-            input("Pressione qualquer tecla para continuar.")
+            menu_voos()
+            
         elif area == '0':
             print("Saindo do sistema...")
             break

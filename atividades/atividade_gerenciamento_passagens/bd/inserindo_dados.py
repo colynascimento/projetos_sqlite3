@@ -30,6 +30,14 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
+    INSERT INTO rotas (cod_linha_aerea, cod_iata_origem, cod_iata_destino, preco_base) 
+    VALUES
+        ('LT4', 'GRU', 'MIA', 1200.00),
+        ('AA1', 'SDU', 'GRU', 400.00),
+        ('GL7', 'MIA', 'GRU', 1300.00);
+''')
+
+cursor.execute('''
     INSERT INTO aeronaves (cod_aeronave, cod_linha_aerea, modelo, capacidade_passageiros, ano) 
     VALUES
         (1, 'GL7', 'Boeing 737', 189, 2005),
@@ -38,11 +46,11 @@ cursor.execute('''
 ''')
 
 cursor.execute('''
-    INSERT INTO voos (cod_voo, cod_linha_aerea, cod_aeronave, cod_iata_origem, cod_iata_destino, data_hora_partida, data_hora_chegada, plataforma) 
+    INSERT INTO voos (cod_voo, cod_rota, cod_linha_aerea, cod_aeronave, cod_iata_origem, cod_iata_destino, data_hora_partida, data_hora_chegada, plataforma) 
     VALUES
-        (1, 'LT4', 1, 'GRU', 'MIA', '2024-12-10 08:00', '2024-12-10 16:00', 5),
-        (2, 'AA1', 2, 'SDU', 'GRU', '2024-12-11 15:30', '2024-12-11 17:00', 2),
-        (3, 'GL7', 3, 'MIA', 'GRU', '2024-12-12 10:00', '2024-12-12 18:00', 7);
+        (1, 1, 'LT4', 1, 'GRU', 'MIA', '2024-12-10 08:00', '2024-12-10 16:00', 5),
+        (2, 2, 'AA1', 2, 'SDU', 'GRU', '2024-12-11 15:30', '2024-12-11 17:00', 2),
+        (3, 3, 'GL7', 3, 'MIA', 'GRU', '2024-12-12 10:00', '2024-12-12 18:00', 7);
 ''')
 
 cursor.execute('''
@@ -51,14 +59,6 @@ cursor.execute('''
         (1, 1, 'executivo', '1A', 'emitida', 1500.00, '2024-12-01 09:30'),
         (2, 2, 'comfort', '10B', 'reservada', 500.00, '2024-12-02 14:45'),
         (3, 3, 'primeira classe', '2C', 'emitida', 2500.00, '2024-12-03 11:20');
-''')
-
-cursor.execute('''
-    INSERT INTO rotas (cod_linha_aerea, cod_iata_origem, cod_iata_destino, preco_base) 
-    VALUES
-        ('LT4', 'GRU', 'MIA', 1200.00),
-        ('AA1', 'SDU', 'GRU', 400.00),
-        ('GL7', 'MIA', 'GRU', 1300.00);
 ''')
 
 cursor.execute('''
