@@ -29,6 +29,14 @@ class RotaDao:
         conn.close()
         return tabela_rotas
     
+    def buscar_por_cod(self, cod_rota):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM rotas WHERE cod_rota = ?', (cod_rota,))
+        resultado = cursor.fetchone()
+        conn.close()
+        return Rota(*resultado) if resultado else None
+    
     def filtrar_por_linha_aerea(self, cod_linha_aerea):
         conn = self.conectar()
         cursor = conn.cursor()

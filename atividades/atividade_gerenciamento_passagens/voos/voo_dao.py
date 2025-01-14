@@ -29,7 +29,7 @@ class VooDAO:
         conn.close()
         return tabela_voos
     
-    def buscar_por_id(self, cod_voo):
+    def buscar_por_cod(self, cod_voo):
         conn = self.conectar()
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM voos WHERE cod_voo = ?', (cod_voo,))
@@ -66,10 +66,10 @@ class VooDAO:
         conn = self.conectar()
         cursor = conn.cursor()
         cursor.execute('''
-            INSERT INTO voos (cod_rota, cod_linha_aerea, cod_aeronave, cod_iata_origem, cod_iata_destino, data_hoa_partida, data_hora_chegada, plataforma)
-            VALUES (?, ?, ?, ?)               
-        ''', (nova_rota.cod_linha_aerea, nova_rota.cod_iata_origem, nova_rota.cod_iata_destino, nova_rota.preco_base))
-        nova_rota.cod_rota = cursor.lastrowid # recupera id gerado pelo banco para o cod_rota
+            INSERT INTO voos (cod_rota, cod_linha_aerea, cod_aeronave, cod_iata_origem, cod_iata_destino, data_hora_partida, data_hora_chegada, plataforma)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)               
+        ''', (novo_voo.cod_rota, novo_voo.cod_linha_aerea, novo_voo.cod_aeronave, novo_voo.cod_iata_origem, novo_voo.cod_iata_destino, novo_voo.data_hora_partida, novo_voo.data_hora_chegada, novo_voo.plataforma))
+        novo_voo.cod_voo = cursor.lastrowid # recupera id gerado pelo banco para o cod_voo
         conn.commit()
         conn.close()
 
@@ -78,4 +78,11 @@ class VooDAO:
         cursor = conn.cursor()
         cursor.execute('DELETE FROM voos WHERE cod_voo = ?', (cod_voo,))
         conn.commit()
-        conn.close()    
+        conn.close()
+
+    def editar(self, cod_voo, atributo, novo_valor):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute(f'UPDATE FROM voos SET {atributo} = ? WHERE cod_voo = ?', (novo_valor, cod_voo))    
+        conn.commit()
+        conn.close()
