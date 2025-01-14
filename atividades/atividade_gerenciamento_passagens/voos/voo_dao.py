@@ -61,5 +61,21 @@ class VooDAO:
         consulta = cursor.fetchall()
         conn.close()
         return consulta
-        
-        # modificar na criação do bd na tabela ajuste_preco para cod_rota tornar-se cod_voo
+    
+    def cadastrar(self, novo_voo):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO voos (cod_rota, cod_linha_aerea, cod_aeronave, cod_iata_origem, cod_iata_destino, data_hoa_partida, data_hora_chegada, plataforma)
+            VALUES (?, ?, ?, ?)               
+        ''', (nova_rota.cod_linha_aerea, nova_rota.cod_iata_origem, nova_rota.cod_iata_destino, nova_rota.preco_base))
+        nova_rota.cod_rota = cursor.lastrowid # recupera id gerado pelo banco para o cod_rota
+        conn.commit()
+        conn.close()
+
+    def deletar(self, cod_voo):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM voos WHERE cod_voo = ?', (cod_voo,))
+        conn.commit()
+        conn.close()    
