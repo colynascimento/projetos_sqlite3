@@ -62,6 +62,31 @@ class VooDAO:
         conn.close()
         return consulta
     
+    def consultar_por_linha_aerea(self, cod_linha_aerea):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT
+                voos.cod_aeronave,
+                linhas_aereas.nome AS nome_linha_aerea,
+                voos.cod_iata_origem,
+                voos.cod_iata_destino,
+                voos.data_hora_partida,
+                voos.data_hora_chegada,
+                (rotas.preco_base * (1 - COALESCE(ajustes_preco.valor_porcentual, 0) / 100)) AS preco_atual,
+                voos.plataforma
+            FROM voos
+            INNER JOIN linhas_aereas ON voos.cod_linha_aerea = linhas_aereas.cod_linha_aerea
+            INNER JOIN rotas ON voos.cod_rota = rotas.cod_rota
+            LEFT JOIN ajustes_preco ON voos.cod_voo = ajustes_preco.cod_voo
+                AND (ajustes_preco.data_inicio IS NULL OR CURRENT_DATE >= ajustes_preco.data_inicio)
+                AND (ajustes_preco.data_fim IS NULL OR CURRENT_DATE <= ajustes_preco.data_fim)
+            WHERE voos.cod_linha_aerea = ?
+        ''',    (cod_linha_aerea,)) # COALESCE substitui o valor do desconto por 0 caso ele seja nulo, garantindo a integridade do valor mesmo sem ajuste de preço
+        consulta = cursor.fetchall()
+        conn.close()
+        return consulta
+    
     def cadastrar(self, novo_voo):
         conn = self.conectar()
         cursor = conn.cursor()

@@ -21,8 +21,7 @@ def menu_voos():
             print('Nenhum vôo cadastrado.')
 
         else:
-            tabela = PrettyTable()
-            tabela.field_names = ['Código Vôo', 'Código Linha Aérea', 'Linha Aérea', 'Cidade Origem', 'Cidade Destino', 'Partida', 'Chegada']
+            tabela = PrettyTable(['Código Vôo', 'Código Linha Aérea', 'Linha Aérea', 'Cidade Origem', 'Cidade Destino', 'Partida', 'Chegada'])
 
             for voo in voos:
                 tabela.add_row(voo)
@@ -73,8 +72,7 @@ def exibir_detalhes(voo_dao):
         else:
             detalhes = voo_dao.consultar(voo_detalhado.cod_voo)
 
-            tabela_detalhada = PrettyTable()
-            tabela_detalhada.field_names = ['Código Vôo', 'Linha Aérea', 'IATA Origem', 'IATA Destino', 'Partida', 'Chegada', 'Valor', 'Plataforma']
+            tabela_detalhada = PrettyTable(['Código Vôo', 'Linha Aérea', 'IATA Origem', 'IATA Destino', 'Partida', 'Chegada', 'Valor', 'Plataforma'])
 
             for detalhe in detalhes:
                 tabela_detalhada.add_row(detalhe)
@@ -99,11 +97,10 @@ def cadastrar(voo_dao, linha_aerea_dao, rota_dao):
 
             print(f'Voos de {nome_linha_aerea}:')
 
-            detalhes = voo_dao.consultar(cod_linha_aerea)
+            detalhes = voo_dao.consultar_por_linha_aerea(cod_linha_aerea)
 
-            tabela_detalhada = PrettyTable()
-            tabela_detalhada.field_names = ['Código Vôo', 'Código Rota', 'Linha Aérea', 'IATA Origem', 'IATA Destino', 'Partida', 'Chegada', 'Valor', 'Plataforma']
-
+            tabela_detalhada = PrettyTable(['Código Vôo', 'Linha Aérea', 'IATA Origem', 'IATA Destino', 'Partida', 'Chegada', 'Valor', 'Plataforma'])
+            
             for detalhe in detalhes:
                 tabela_detalhada.add_row(detalhe)
 
