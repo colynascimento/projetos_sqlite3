@@ -108,6 +108,6 @@ class VooDAO:
     def editar(self, cod_voo, atributo, novo_valor):
         conn = self.conectar()
         cursor = conn.cursor()
-        cursor.execute(f'UPDATE FROM voos SET {atributo} = ? WHERE cod_voo = ?', (novo_valor, cod_voo))    
+        cursor.execute(f'UPDATE voos SET {atributo} = ? WHERE cod_voo = ?', (novo_valor, cod_voo))    
         conn.commit()
         conn.close()
