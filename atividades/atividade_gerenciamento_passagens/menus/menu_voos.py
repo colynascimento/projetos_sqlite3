@@ -197,4 +197,5 @@ def deletar(voo_dao):
             menu_voos()
 
 def exibir_ajustes_preco(voo_dao):
+    
     pass
