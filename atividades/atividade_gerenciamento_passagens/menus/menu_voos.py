@@ -263,3 +263,17 @@ def cadastrar_ajuste_preco(ajustes_preco_dao):
         print('Ajuste de preço ativado com sucesso!')
         input('Pressione Enter para voltar...')
         menu_voos()
+
+# def editar_ajuste_preco(ajustes_preco_dao):
+#     while True:
+#         print('_' * 60)
+#         print('Modificar Ajuste de Preço:')
+#         print()
+
+#         cod_ajuste = int(input('Insira o código da rota que deseja modificar: ')) # criar validação aqui
+#         novo_preco_base = float(input('Insira o novo preço base (Utilize o ponto como separador decimal): '))
+        
+#         rotas_dao.editar_preco_base(cod_rota, novo_preco_base)
+#         print('Valor base da rota modificado com sucesso!')
+#         input('Pressione Enter para voltar...')
+#         menu_linhas_aereas()
