@@ -65,8 +65,8 @@ cursor.execute('''
     INSERT INTO ajustes_preco (cod_voo, tipo_ajuste, valor_porcentual, descricao, data_inicio, data_fim) 
     VALUES
         (1, 'desconto', -10.00, 'Promoção de Natal', '2024-12-01', '2024-12-25'),
-        (2, 'aumento', 15.00, 'Alta temporada', '2024-12-15', '2025-01-15'),
-        (3, 'desconto', -5.00, 'Fidelidade', '2024-12-05', '2024-12-10');
+        (2, 'aumento', 15.00, 'Alta temporada', '2024-12-15', '2025-01-20'),
+        (3, 'desconto', -5.00, 'Fidelidade', '2025-01-18', '2025-01-31');
 ''')
 
 conn.commit()

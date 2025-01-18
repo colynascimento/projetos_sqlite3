@@ -2,6 +2,7 @@ from prettytable import PrettyTable
 from voos.voo_dao import Voo, VooDAO
 from linhas_aereas.linha_aerea_dao import LinhaAereaDAO
 from rotas.rota_dao import RotaDao
+from ajustes_preco.ajuste_preco_dao import AjusteDao, AjustePreco
 import os
 
 def menu_voos():
@@ -10,6 +11,7 @@ def menu_voos():
     voo_dao = VooDAO('../projetos_sqlite3/BD/bd_sistema_gerenciamento_passagens.db')
     linha_aerea_dao = LinhaAereaDAO('../projetos_sqlite3/BD/bd_sistema_gerenciamento_passagens.db')
     rota_dao = RotaDao('../projetos_sqlite3/BD/bd_sistema_gerenciamento_passagens.db')
+    ajustes_preco_dao = AjusteDao('../projetos_sqlite3/BD/bd_sistema_gerenciamento_passagens.db')
 
     while True:
         os.system('cls')
@@ -51,7 +53,7 @@ def menu_voos():
         elif opcao == '4':
             deletar(voo_dao)
         elif opcao == '5':
-            exibir_ajustes_preco(voo_dao)
+            exibir_ajustes_preco(voo_dao, ajustes_preco_dao)
         else:
             print('Opção inválida. Tente novamente.')
             input('Pressione Enter para continuar.')
@@ -157,20 +159,20 @@ def modificar(voo_dao):
 
         print('_' * 60)
 
-        campo_editado = input('Digite o campo escolhido: ')
+        escolha = input('Digite o campo escolhido: ')
         novo_valor = input('Insira o novo valor atualizado: ')
 
-        if campo_editado == '0':
+        if escolha == '0':
             return
-        elif campo_editado == '1':
-            campo_editado = 'cod_aeronave'
+        elif escolha == '1':
+            escolha = 'cod_aeronave'
             novo_valor = int(novo_valor)
-        elif campo_editado == '2':
-            campo_editado = 'data_hora_partida'
-        elif campo_editado == '3':
-            campo_editado = 'data_hora_chegada'
-        elif campo_editado == '4':
-            campo_editado = 'plataforma'
+        elif escolha == '2':
+            escolha = 'data_hora_partida'
+        elif escolha == '3':
+            escolha = 'data_hora_chegada'
+        elif escolha == '4':
+            escolha = 'plataforma'
             novo_valor = int(novo_valor)
         else:
             print('Opção inválida. Tente novamente.')
@@ -178,7 +180,7 @@ def modificar(voo_dao):
             continue
 
 
-        voo_dao.editar(cod_voo, campo_editado, novo_valor)
+        voo_dao.editar(cod_voo, escolha, novo_valor)
         print('Valor base da rota modificado com sucesso!')
         input('Pressione Enter para voltar...')
         menu_voos()
@@ -196,6 +198,68 @@ def deletar(voo_dao):
             input('Pressione Enter para voltar...')
             menu_voos()
 
-def exibir_ajustes_preco(voo_dao):
-    
-    pass
+def exibir_ajustes_preco(voo_dao, ajustes_preco_dao):
+     while True:
+        print('_' * 60)
+        print('Ajustes nos Preços das Passagens')
+        print()
+
+        ajustes = ajustes_preco_dao.listar_todos()
+
+        if not ajustes_preco_dao:
+            print('Nenhum ajuste de preço ativo no momento.')
+
+        else:
+            tabela = PrettyTable(['Código Ajuste', 'Código Vôo', 'Preço Base', 'Linha Aérea', 'Tipo de Ajuste', 'Valor Porcentual', 'Descricao', 'Data Início', 'Data Fim'])
+
+            for ajuste in ajustes:
+                tabela.add_row(ajuste)
+                
+            print(tabela)
+
+            print()
+            print('Opções')
+            print('_' * 60)
+            print('0 - Voltar ao Menu de Vôos')
+            print('1 - Adicionar Novo Ajuste')
+            print('2 - Editar Ajuste Existente')
+            print('3 - Desativar Ajuste')
+            print('_' * 60)
+
+            escolha = input('Digite a opção desejada: ')
+
+            if escolha == '0':
+                pass
+            elif escolha == '1':
+                cadastrar_ajuste_preco(ajustes_preco_dao)
+            elif escolha == '2':
+                pass
+            elif escolha == '3':
+                pass
+            elif escolha == '4':
+                pass
+            else:
+                print('Opção inválida. Tente novamente.')
+                input('Pressione Enter para continuar.')
+                continue
+
+            menu_voos()
+
+def cadastrar_ajuste_preco(ajustes_preco_dao):
+    while True:
+        print('_' * 60)
+        print('Cadastrar Novo Ajuste de Preço')
+        print()
+
+        cod_voo = input('Insira o código do vôo: ') # criar validação aqui
+        tipo_ajuste = input('Insira o tipo de ajuste (aumento/desconto): ')
+        valor_porcentual = float(input('Insira o valor em porcentagem de alteração do preco: '))
+        descricao = input('Insira uma breve descrição do ajuste: ')
+        data_inicio = input('Insira a data de ínicio do ajuste: ')
+        data_fim = input('Insira a data de término do ajuste: ')
+        
+        novo_ajuste = AjustePreco(None, cod_voo, tipo_ajuste, valor_porcentual, descricao, data_inicio, data_fim)
+        ajustes_preco_dao.cadastrar(novo_ajuste)
+        print('Ajuste de preço ativado com sucesso!')
+        input('Pressione Enter para voltar...')
+        menu_voos()
