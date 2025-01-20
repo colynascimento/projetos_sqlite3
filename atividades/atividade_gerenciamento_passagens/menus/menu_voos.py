@@ -233,11 +233,9 @@ def exibir_ajustes_preco(voo_dao, ajustes_preco_dao):
             elif escolha == '1':
                 cadastrar_ajuste_preco(ajustes_preco_dao)
             elif escolha == '2':
-                pass
+                editar_ajuste_preco(ajustes_preco_dao)
             elif escolha == '3':
-                pass
-            elif escolha == '4':
-                pass
+                desativar_ajustes_preco(ajustes_preco_dao)
             else:
                 print('Opção inválida. Tente novamente.')
                 input('Pressione Enter para continuar.')
@@ -264,16 +262,35 @@ def cadastrar_ajuste_preco(ajustes_preco_dao):
         input('Pressione Enter para voltar...')
         menu_voos()
 
-# def editar_ajuste_preco(ajustes_preco_dao):
-#     while True:
-#         print('_' * 60)
-#         print('Modificar Ajuste de Preço:')
-#         print()
+def editar_ajuste_preco(ajustes_preco_dao):
+    while True:
+        print('_' * 60)
+        print('Modificar Ajuste de Preço:')
+        print()
 
-#         cod_ajuste = int(input('Insira o código da rota que deseja modificar: ')) # criar validação aqui
-#         novo_preco_base = float(input('Insira o novo preço base (Utilize o ponto como separador decimal): '))
+        cod_ajuste = int(input('Insira o código do vôo que deseja modificar: ')) # criar validação aqui
+
+        novo_tipo = input('Insira o tipo de ajuste (aumento/desconto): ')
+        novo_valor = float(input('Insira o novo valor em porcentagem da alteração do preco: '))
+        nova_descricao = input('Insira a descrição do ajuste: ')
+        nova_data_inicio = input('Insira a data de ínicio do ajuste: ')
+        nova_data_fim = input('Insira a data de término do ajuste: ')
+
+
+        ajustes_preco_dao.editar(cod_ajuste, novo_tipo, novo_valor, nova_descricao, nova_data_inicio, nova_data_fim)
+        print('Ajuste de preço atualizado com sucesso!')
+        input('Pressione Enter para voltar...')
+        menu_voos()
+
+def desativar_ajustes_preco(ajustes_preco_dao):
+    while True:
+        print('_' * 60)
+        print('Desativar Ajuste de Preço:')
+        print()
+
+        cod_ajuste = int(input('Insira o código da rota que deseja excluir: ')) # criar validação aqui
         
-#         rotas_dao.editar_preco_base(cod_rota, novo_preco_base)
-#         print('Valor base da rota modificado com sucesso!')
-#         input('Pressione Enter para voltar...')
-#         menu_linhas_aereas()
+        ajustes_preco_dao.deletar(cod_ajuste)
+        print(f'Rota {cod_ajuste} deletada com sucesso!')
+        input('Pressione Enter para voltar...')
+        menu_voos()

@@ -40,4 +40,25 @@ class AjusteDao:
         novo_ajuste.cod_rota = cursor.lastrowid # recupera id gerado pelo banco para o cod_ajuste
         conn.commit()
         conn.close()
-    
+
+    def editar(self, cod_ajuste, novo_tipo, novo_valor, nova_descricao, nova_data_inicio, nova_data_fim):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE ajustes_preco
+            SET tipo_ajuste = ?,
+                valor_porcentual = ?,
+                descricao = ?,
+                data_inicio = ?,
+                data_fim = ?
+            WHERE cod_ajuste = ?
+        ''', (novo_tipo, novo_valor, nova_descricao, nova_data_inicio, nova_data_fim, cod_ajuste))
+        conn.commit()
+        conn.close()
+
+    def deletar(self, cod_ajuste):
+        conn = self.conectar()
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM ajustes_preco WHERE cod_ajuste = ?', (cod_ajuste,))
+        conn.commit()
+        conn.close()
