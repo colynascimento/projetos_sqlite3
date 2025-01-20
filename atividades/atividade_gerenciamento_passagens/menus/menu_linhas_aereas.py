@@ -22,8 +22,7 @@ def menu_linhas_aereas():
             print('Nenhuma linha aérea cadastrada.')
 
         else:
-            tabela = PrettyTable()
-            tabela.field_names = ['Código Linha Aérea', 'Nome', 'País de Origem', 'Contato Suporte', 'E-mail']
+            tabela = PrettyTable(['Código Linha Aérea', 'Nome', 'País de Origem', 'Contato Suporte', 'E-mail'])
 
             for linha_aerea in linhas_aereas:
                 tabela.add_row([linha_aerea.cod_linha_aerea, linha_aerea.nome, linha_aerea.pais_origem, linha_aerea.contato_suporte, linha_aerea.email])
@@ -37,14 +36,14 @@ def menu_linhas_aereas():
         print('2 - Visualizar Rotas Operadas')
         print('_' * 60)
 
-        opcao = input('Digite a opção desejada: ')
+        menu = input('Digite a opção desejada: ')
 
-        if opcao == '0':
+        if menu == '0':
             return
-        elif opcao == '1':
+        elif menu == '1':
             cadastrar_aeronaves(linha_aerea_dao, aeronave_dao)
-        elif opcao == '2':
-            visualizar_rotas(rotas_dao)
+        elif menu == '2':
+            visualizar_rotas(rotas_dao, linha_aerea_dao)
         else:
             print('Opção inválida. Tente novamente.')
             input('Pressione Enter para continuar.')
@@ -67,8 +66,7 @@ def cadastrar_aeronaves(linha_aerea_dao, aeronave_dao):
             print(f'Aeronaves de {nome_linha_aerea}:')
 
             filtro_linha_aerea = aeronave_dao.filtrar_por_linha_aerea(cod_linha_aerea)
-            tabela_filtrada = PrettyTable()
-            tabela_filtrada.field_names = ['Código Aeronave', 'Modelo', 'Capacidade de Passageiros', 'Ano']
+            tabela_filtrada = PrettyTable(['Código Aeronave', 'Modelo', 'Capacidade de Passageiros', 'Ano'])
     
             for aeronave in filtro_linha_aerea:
                 tabela_filtrada.add_row([aeronave.cod_aeronave, aeronave.modelo, aeronave.capacidade_passageiros, aeronave.ano])
@@ -77,6 +75,7 @@ def cadastrar_aeronaves(linha_aerea_dao, aeronave_dao):
 
             print('Cadastrar nova aeronave:')
             print('_' * 60)
+
             cod_aeronave = int(input('Insira o código da aeronave(apenas números): ')) # criar validação aqui
             modelo = input('Insira o modelo: ')
             capacidade_passageiros = int(input('Insira a capacidade máxima de passageiros: '))
@@ -89,7 +88,7 @@ def cadastrar_aeronaves(linha_aerea_dao, aeronave_dao):
             input('Pressione Enter para voltar...')
             menu_linhas_aereas()
 
-def visualizar_rotas(rotas_dao):
+def visualizar_rotas(rotas_dao, linha_aerea_dao):
 
     while True:
         os.system('cls')
@@ -101,8 +100,7 @@ def visualizar_rotas(rotas_dao):
             print('Nenhuma rota cadastrada.')
 
         else:
-            tabela = PrettyTable()
-            tabela.field_names = ['Código Rota', 'Código Linha Aérea', 'Linha Aérea','Cidade Origem', 'IATA Origem', 'Cidade Destino', 'IATA Destino', 'Preco Base']
+            tabela = PrettyTable(['Código Rota', 'Código Linha Aérea', 'Linha Aérea','Cidade Origem', 'IATA Origem', 'Cidade Destino', 'IATA Destino', 'Preco Base'])
 
             for rota in rotas:
                 tabela.add_row(rota)
@@ -121,7 +119,7 @@ def visualizar_rotas(rotas_dao):
         if opcao == '0':
             return
         elif opcao == '1':
-            cadastrar_rotas(rotas_dao)
+            cadastrar_rotas(rotas_dao, linha_aerea_dao)
         elif opcao == '2':
             modificar_preco_rota(rotas_dao)
         elif opcao == '3':
@@ -130,18 +128,29 @@ def visualizar_rotas(rotas_dao):
             print('Opção inválida. Tente novamente.')
             input('Pressione Enter para continuar.')
         
-def cadastrar_rotas(rotas_dao):
+def cadastrar_rotas(rotas_dao, linha_aerea_dao):
 
     while True:
         print('_' * 60)
         print('Cadastrar nova rota')
         print()
 
-        cod_linha_aerea = input('Insira o código da linha aérea: ') # criar validação aqui
+        
+        cod_linha_aerea = input('Insira o código da linha aérea: ')
+        if not linha_aerea_dao.buscar_por_cod(cod_linha_aerea):
+            print('_' * 60)
+            print(f"Erro: O código '{cod_linha_aerea}' não existe. Verifique as informações e tente novamente.")
+            continue
+
         cod_iata_origem = input('Insira o código IATA do aeroporto de origem: ')
         cod_iata_destino = input('Insira o código IATA do aeroporto de destino: ')
-        preco_base = float(input('Insira o preço base (Utilize o ponto como separador decimal): '))
-        
+        try:
+            preco_base = float(input('Insira o preço base (Utilize o ponto como separador decimal): '))
+        except ValueError:
+            print('_' * 60)
+            print("Entrada inválida. Por favor, insira um preço válido.")
+            continue
+
         nova_rota = Rota(None, cod_linha_aerea, cod_iata_origem, cod_iata_destino, preco_base)
         rotas_dao.cadastrar(nova_rota)
         print('Rota adicionada com sucesso!')
@@ -155,7 +164,18 @@ def modificar_preco_rota(rotas_dao):
         print('Modificar preço base da rota')
         print()
 
-        cod_rota = int(input('Insira o código da rota que deseja modificar: ')) # criar validação aqui
+        try: 
+            cod_rota = int(input('Insira o código da rota que deseja modificar: '))
+        except ValueError:
+            print('_' * 60)
+            print("Entrada inválida. Por favor, insira apenas números")
+            continue
+        if not rotas_dao.buscar_por_cod(cod_rota):
+            print('_' * 60)
+            print(f"Erro: O código '{cod_rota}' não existe. Verifique as informações e tente novamente.")
+            continue
+
+
         novo_preco_base = float(input('Insira o novo preço base (Utilize o ponto como separador decimal): '))
         
         rotas_dao.editar_preco_base(cod_rota, novo_preco_base)
@@ -170,7 +190,16 @@ def deletar_rota(rotas_dao):
         print('Excluir rota')
         print()
 
-        cod_rota = int(input('Insira o código da rota que deseja excluir: ')) # criar validação aqui
+        try:
+            cod_rota = int(input('Insira o código da rota que deseja excluir: ')) # criar validação aqui
+        except ValueError:
+            print('_' * 60)
+            print("Entrada inválida. Por favor, insira apenas números")
+            continue
+        if not rotas_dao.buscar_por_cod(cod_rota):
+            print('_' * 60)
+            print(f"Erro: O código '{cod_rota}' não existe. Verifique as informações e tente novamente.")
+            continue
         
         rotas_dao.deletar(cod_rota)
         print(f'Rota {cod_rota} deletada com sucesso!')

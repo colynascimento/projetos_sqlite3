@@ -198,7 +198,7 @@ def deletar(voo_dao):
             input('Pressione Enter para voltar...')
             menu_voos()
 
-def exibir_ajustes_preco(voo_dao, ajustes_preco_dao):
+def exibir_ajustes_preco(ajustes_preco_dao):
      while True:
         print('_' * 60)
         print('Ajustes nos Preços das Passagens')

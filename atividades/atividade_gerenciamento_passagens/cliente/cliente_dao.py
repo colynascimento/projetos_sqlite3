@@ -32,7 +32,8 @@ class ClienteDao:
     def buscar_historico_passagens(self, id_cliente):
         conn = self.conectar()
         cursor = conn.cursor()
-        cursor.execute('''SELECT 
+        cursor.execute('''
+            SELECT 
                 passagens.cod_passagem,
                 origem.cidade AS cidade_origem, 
                 destino.cidade AS cidade_destino,

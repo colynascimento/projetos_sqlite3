@@ -32,11 +32,11 @@ def menu_clientes():
         print('1 - Visualizar Histórico de Passagens')
         print('_' * 60)
 
-        opcao = input('Digite a opção desejada: ')
+        menu = input('Digite a opção desejada: ')
 
-        if opcao == '0':
+        if menu == '0':
             return
-        elif opcao == '1':
+        elif menu == '1':
             visualizar_historico_passagens(dao)
         else:
             print("Opção inválida. Tente novamente.")
