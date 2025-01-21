@@ -1,5 +1,4 @@
 import sqlite3
-import os
 
 conn = sqlite3.connect('../projetos_sqlite3/BD/bd_sistema_gerenciamento_passagens.db')
 

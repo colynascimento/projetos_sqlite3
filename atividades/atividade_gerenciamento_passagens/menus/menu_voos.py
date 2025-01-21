@@ -61,23 +61,26 @@ def menu_voos():
 def exibir_detalhes(voo_dao):
     
     while True:
-
         print('_' * 60)
-        voo_detalhado = int(input('Insira o código do vôo que deseja consultar: ')) # inserir validação aqui
+
+        try:
+            voo_detalhado = int(input('Insira o código do vôo que deseja consultar: ')) # inserir validação aqui
+        except ValueError:
+            print('_' * 60)
+            print("Entrada inválida. Por favor, insira apenas números")
+            continue
 
         voo_detalhado = voo_dao.buscar_por_cod(voo_detalhado)
 
         if not voo_detalhado:
-            print('Código inválido.')
-            print('Pressione Enter para retornar.')
+            print(f"Erro: O código não existe. Verifique as informações e tente novamente.")
+            continue
 
-        else:
-            detalhes = voo_dao.consultar(voo_detalhado.cod_voo)
-
-            tabela_detalhada = PrettyTable(['Código Vôo', 'Linha Aérea', 'IATA Origem', 'IATA Destino', 'Partida', 'Chegada', 'Valor', 'Plataforma'])
-
-            for detalhe in detalhes:
-                tabela_detalhada.add_row(detalhe)
+        detalhes = voo_dao.consultar(voo_detalhado.cod_voo)
+        tabela_detalhada = PrettyTable(['Código Vôo', 'Linha Aérea', 'IATA Origem', 'IATA Destino', 'Partida', 'Chegada', 'Valor', 'Plataforma'])
+        
+        for detalhe in detalhes:
+            tabela_detalhada.add_row(detalhe)
 
         print(tabela_detalhada)
         input('Pressione Enter para voltar ao menu.')
@@ -91,45 +94,39 @@ def cadastrar(voo_dao, linha_aerea_dao, rota_dao):
         cod_linha_aerea = input('Insira o código da linha aérea: ').upper()
         nome_linha_aerea = linha_aerea_dao.nomear_por_cod(cod_linha_aerea)
 
-        if linha_aerea_dao.buscar_por_cod(cod_linha_aerea) is None:
+        if not linha_aerea_dao.buscar_por_cod(cod_linha_aerea):
             print('Linha Aérea não encontrada.')
             continue
-        else:
-            os.system('cls')
+        
+        os.system('cls')
+        print(f'Voos de {nome_linha_aerea}:')
+        detalhes = voo_dao.consultar_por_linha_aerea(cod_linha_aerea)
+        tabela_detalhada = PrettyTable(['Código Vôo', 'Linha Aérea', 'IATA Origem', 'IATA Destino', 'Partida', 'Chegada', 'Valor', 'Plataforma'])
+        
+        for detalhe in detalhes:
+            tabela_detalhada.add_row(detalhe)
+        print(tabela_detalhada)
+        print(f'Cadastrar novo vôo de {nome_linha_aerea}:')
+        print('_' * 60)
+        
+        cod_rota = int(input('Insira o código de uma rota já existente na companhia: '))
+        if not rota_dao.buscar_por_cod(cod_rota):
+            print('Código de rota não encontrado. Tente novamente.')
+            continue
+        cod_aeronave = int(input('Insira o código de uma aeronave da companhia: '))
+        data_hora_partida = input('Insira a data e hora de partida no formato (AAAA-MM-DD HH:MM): ')
+        data_hora_chegada = input('Insira a data e hora de chegada no formato (AAAA-MM-DD HH:MM): ')
+        plataforma = int(input('Insira a plataforma de embarque(apenas números): '))
+        
+        rota = rota_dao.buscar_por_cod(cod_rota)
 
-            print(f'Voos de {nome_linha_aerea}:')
-
-            detalhes = voo_dao.consultar_por_linha_aerea(cod_linha_aerea)
-
-            tabela_detalhada = PrettyTable(['Código Vôo', 'Linha Aérea', 'IATA Origem', 'IATA Destino', 'Partida', 'Chegada', 'Valor', 'Plataforma'])
-            
-            for detalhe in detalhes:
-                tabela_detalhada.add_row(detalhe)
-
-            print(tabela_detalhada)
-
-            print(f'Cadastrar novo vôo de {nome_linha_aerea}:')
-            print('_' * 60)
-            cod_rota = int(input('Insira o código de uma rota já existente na companhia: '))
-            cod_aeronave = int(input('Insira o código de uma aeronave da companhia: '))
-            data_hora_partida = input('Insira a data e hora de partida no formato (AAAA-MM-DD HH:MM): ')
-            data_hora_chegada = input('Insira a data e hora de chegada no formato (AAAA-MM-DD HH:MM): ')
-            plataforma = int(input('Insira a plataforma de embarque(apenas números): '))
-            
-            rota = rota_dao.buscar_por_cod(cod_rota)
-            if rota is None:
-                print('Código de rota não encontrado. Tente novamente.')
-                continue
-
-            cod_iata_origem = rota.cod_iata_origem
-            cod_iata_destino = rota.cod_iata_destino
-
-            novo_voo = Voo(None, cod_rota, cod_aeronave, cod_linha_aerea, cod_iata_origem, cod_iata_destino, data_hora_partida, data_hora_chegada, plataforma)
-            voo_dao.cadastrar(novo_voo)
-
-            print('Voo adicionado com sucesso!')
-            input('Pressione Enter para voltar...')
-            menu_voos()
+        cod_iata_origem = rota.cod_iata_origem
+        cod_iata_destino = rota.cod_iata_destino
+        novo_voo = Voo(None, cod_rota, cod_aeronave, cod_linha_aerea, cod_iata_origem, cod_iata_destino, data_hora_partida, data_hora_chegada, plataforma)
+        voo_dao.cadastrar(novo_voo)
+        print('Voo adicionado com sucesso!')
+        input('Pressione Enter para voltar...')
+        menu_voos()
 
 def modificar(voo_dao):
     

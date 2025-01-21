@@ -11,7 +11,8 @@ class VooDAO:
     def listar_todos(self):
         conn = self.conectar()
         cursor = conn.cursor()
-        cursor.execute('''SELECT
+        cursor.execute('''
+        SELECT
             voos.cod_voo,
             voos.cod_linha_aerea,
             linhas_aereas.nome,
