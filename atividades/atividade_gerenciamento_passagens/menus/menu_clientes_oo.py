@@ -6,33 +6,34 @@ class MenuClientes:
         self.dao = dao
     
     def exibir_menu(self):
-        os.system('cls')
 
-        print('Menu de Clientes')
-        print('_' * 60)
+        while True:
+            os.system('cls')
 
-        clientes = self.dao.listar_todos()
-        self.exibir_clientes(clientes)
+            print('Menu de Clientes')
+            print('_' * 60)
 
-        print('Opções')
-        print('_' * 60)
-        print('0 - Voltar ao Menu Principal')
-        print('1 - Visualizar Histórico de Passagens')
-        print('_' * 60)
+            clientes = self.dao.listar_todos()
+            self.exibir_clientes(clientes)
 
-        menu = input('Digite a opção desejada: ')
-        if menu == '0':
-            return
-        elif menu == '1':
-            self.visualizar_historico_passagens()
-        else:
-            print("Opção inválida. Tente novamente.")
-            input("Pressione qualquer tecla para continuar.")
+            print('Opções')
+            print('_' * 60)
+            print('0 - Voltar ao Menu Principal')
+            print('1 - Visualizar Histórico de Passagens')
+            print('_' * 60)
+
+            menu = input('Digite a opção desejada: ')
+            if menu == '0':
+                break
+            elif menu == '1':
+                self.visualizar_historico_passagens()
+            else:
+                print("Opção inválida. Tente novamente.")
+                input("Pressione qualquer tecla para continuar.")
 
     def exibir_clientes(self, clientes):
         if not clientes:
             print('Nenhum cliente cadastrado.')
-
         else:
             tabela = PrettyTable(['ID', 'Nome', 'Data Nascimento', 'Nacionalidade', 'Documento', 'Telefone', 'Email', 'Deficiencia Legal?'])
             for cliente in clientes:
